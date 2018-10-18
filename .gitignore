@@ -1,0 +1,9 @@
+*.DS_Store
+Library/*
+obj/*
+Logs/*
+Packages/*
+ProjectSettings/*
+Temp/*
+.vs/*
+.gitattributes
