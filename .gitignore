@@ -7,3 +7,4 @@ ProjectSettings/*
 Temp/*
 .vs/*
 .gitattributes
+Assembly-CSharp.csproj

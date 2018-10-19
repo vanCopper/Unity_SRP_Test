@@ -64,6 +64,7 @@
     <Compile Include="Assets\Scripts\SRPTest_01.cs" />
     <Compile Include="Assets\Scripts\SRPTest_01_Asset.cs" />
     <None Include="Assets\Shaders\Transparent.shader" />
+    <None Include="Assets\readme.txt" />
     <None Include="Assets\Shaders\Opaque.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>/Code/Code_Unity/SRP_Test/SRP_Test/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>

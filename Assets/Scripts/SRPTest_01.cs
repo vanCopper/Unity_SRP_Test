@@ -6,16 +6,10 @@ namespace SRPTest_01
 {
     public class DevRenderPipeline : RenderPipeline
     {
-        CommandBuffer commandBuffer;
 
         public override void Dispose()
         {
             base.Dispose();
-
-            if(commandBuffer != null){
-                commandBuffer.Dispose();
-                commandBuffer = null;
-            }
         }
 
         public override void Render(ScriptableRenderContext renderContext, Camera[] cameras)
@@ -24,10 +18,12 @@ namespace SRPTest_01
 
             BeginFrameRendering(cameras);
 
-            if (commandBuffer == null) commandBuffer = new CommandBuffer();
-
-
-            foreach(var camera in cameras){
+            var clearCmd = new CommandBuffer { name = "Clear(SRP-CommandBuffer)" };
+            clearCmd.ClearRenderTarget(true, true, Color.yellow);
+            renderContext.ExecuteCommandBuffer(clearCmd);
+            clearCmd.Release();//dispose
+            //renderContext.Submit();
+            foreach (var camera in cameras){
 
                 BeginCameraRendering(camera);
                 ScriptableCullingParameters cullingParameters;
@@ -38,65 +34,29 @@ namespace SRPTest_01
 
                 renderContext.SetupCameraProperties(camera);
 
-                var clearCmd = new CommandBuffer { name = "Clear(SRP-CommandBuffer)" };
-                clearCmd.ClearRenderTarget(true, true, Color.gray);
-                renderContext.ExecuteCommandBuffer(clearCmd);
 
-                clearCmd.Release();//dispose
-
-                //Draw opaque objects using BasicLightMode shader pass
                 var filterSettings = new FilterRenderersSettings(true);
                 var drawSettings = new DrawRendererSettings(camera, new ShaderPassName("BasicLightMode"));
                 drawSettings.rendererConfiguration = RendererConfiguration.PerObjectLightProbe | RendererConfiguration.PerObjectLightmaps;
 
 
-                // draw opaque objects
+                // 不透明物件
                 filterSettings.renderQueueRange = RenderQueueRange.opaque;
                 drawSettings.sorting.flags = SortFlags.CommonOpaque;
                 renderContext.DrawRenderers(cullResults.visibleRenderers, ref drawSettings, filterSettings);
 
-                // draw skybox
+                // skybox
                 if( camera.clearFlags == CameraClearFlags.Skybox){
                     renderContext.DrawSkybox(camera);
                 }
 
-                // draw transparent objects
-
+                // 透明物件
                 filterSettings.renderQueueRange = RenderQueueRange.transparent;
                 drawSettings.sorting.flags = SortFlags.CommonTransparent;
                 renderContext.DrawRenderers(cullResults.visibleRenderers, ref drawSettings, filterSettings);
 
                 renderContext.Submit();
 
-                //// 设置上下文为当前相机的上下文
-                //renderContext.SetupCameraProperties(camera);
-                ////  渲染至相机的backbuffer
-                //commandBuffer.SetRenderTarget(BuiltinRenderTextureType.CameraTarget);
-                //commandBuffer.ClearRenderTarget(true, true, Color.black);
-                ////执行指令
-                //renderContext.ExecuteCommandBuffer(commandBuffer);
-                //commandBuffer.Clear();
-
-                //renderContext.DrawSkybox(camera);
-
-                //// 执行裁剪
-                //var culled = new CullResults();
-                //CullResults.Cull(camera, renderContext, out culled);
-
-                //// Filtering
-                //var fs = new FilterRenderersSettings(true);
-                //// 设置只绘制不透明物体
-                //fs.renderQueueRange = RenderQueueRange.opaque;
-                //// 绘制所有层
-                //fs.layerMask = ~0;
-
-                //var rs = new DrawRendererSettings(camera, new ShaderPassName("BasicLightMode"));
-                //rs.sorting.flags = SortFlags.None;
-
-                ////绘制物体
-                //renderContext.DrawRenderers(culled.visibleRenderers, ref rs, fs);
-
-                //renderContext.Submit();
             }
         }
     }

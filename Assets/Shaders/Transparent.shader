@@ -8,8 +8,7 @@
     SubShader
     {
         Tags { "RenderType"="Transparent" "Queue"="Transparent" "LightMode"="BasicLightMode" }
-        LOD 100
-        ZWrite Off
+        //ZWrite Off
         Blend SrcAlpha OneMinusSrcAlpha
 
         Pass
@@ -17,7 +16,7 @@
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            #pragma multi_compile_fog
+            //#pragma multi_compile_fog
             
             #include "UnityCG.cginc"
 
@@ -30,7 +29,7 @@
             struct v2f
             {
                 float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
+                //UNITY_FOG_COORDS(1)
                 float4 vertex : SV_POSITION;
             };
 
@@ -43,7 +42,7 @@
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
+                //UNITY_TRANSFER_FOG(o,o.vertex);
                 return o;
             }
             
@@ -51,7 +50,7 @@
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
                 col.a *= _Alpha;
-                UNITY_APPLY_FOG(i.fogCoord, col);
+                //UNITY_APPLY_FOG(i.fogCoord, col);
                 return col;
             }
             ENDCG
