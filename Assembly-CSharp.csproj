@@ -59,7 +59,10 @@
      <None Include="Assets\Shaders\Diffuse_HalfLambert.shader" />
      <None Include="Assets\Shaders\Diffuse_Pixel.shader" />
      <None Include="Assets\Shaders\Diffuse_Vertex.shader" />
+     <None Include="Assets\Shaders\Specular_Pixel.shader" />
+     <None Include="Assets\Shaders\Specular_BlinnPhong.shader" />
      <None Include="Assets\Shaders\Transparent.shader" />
+     <None Include="Assets\Shaders\Specular_Vertex.shader" />
      <None Include="Assets\readme.txt" />
      <None Include="Assets\Shaders\Opaque.shader" />
  <Reference Include="Unity.TextMeshPro.Editor">
