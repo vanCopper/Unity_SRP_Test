@@ -57,6 +57,7 @@
      <Compile Include="Assets\Scripts\SRPTest_01.cs" />
      <Compile Include="Assets\Scripts\SRPTest_01_Asset.cs" />
      <None Include="Assets\Shaders\Diffuse_HalfLambert.shader" />
+     <None Include="Assets\Shaders\Normal_TangentSpace.shader" />
      <None Include="Assets\Shaders\Diffuse_Pixel.shader" />
      <None Include="Assets\Shaders\Diffuse_Vertex.shader" />
      <None Include="Assets\Shaders\Specular_Pixel.shader" />
